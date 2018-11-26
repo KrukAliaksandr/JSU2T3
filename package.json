@@ -1,0 +1,24 @@
+{
+  "name": "jsu2t3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chokidar": "^2.0.4",
+    "eslint": "^5.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrukAliaksandr/JSU2T3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrukAliaksandr/JSU2T3/issues"
+  },
+  "homepage": "https://github.com/KrukAliaksandr/JSU2T3#readme"
+}
