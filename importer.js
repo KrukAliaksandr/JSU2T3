@@ -37,6 +37,4 @@ function returnLastChangedFile() {
 	return this.lastChangedFile;
 }
 
-const importer = new Importer();
-importer.watch(".", 5);
 module.exports = Importer;
