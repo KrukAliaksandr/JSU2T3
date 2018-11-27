@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "chokidar": "^2.0.4",
-    "eslint": "^5.9.0"
+    "csv-string": "^3.1.5",
+    "csvtojson": "^2.0.8",
+    "eslint": "^5.9.0",
+    "papaparse": "^4.6.2"
   },
   "devDependencies": {},
   "scripts": {

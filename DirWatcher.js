@@ -3,86 +3,23 @@ const EventEmitter = require("events");
 let chokidar = require("chokidar");
 const fs = require("fs");
 
-// class DirWatcher {
-//     constructor(path, delay) {
-//         this.path = path;
-//         this.delay = delay;
-//         watch(this.path, this.delay){
-//             fs.watchFile(this.path, [true, 5007])
-//         }
-//     }
-// }
-
-// class MyEmitter extends EventEmitter {};
-
-// Initialize watcher.
-let watcher = chokidar.watch("D:/work/Javascript/JSU2T3/Data",
-	{
-		ignored: /(^|[\/\\])\../,
-		persistent: true,
-		usePolling: true,
-		interval: 100,
-		binaryInterval: 300
+class DirWatcher extends EventEmitter {
+	constructor() {
+		super();
+		this.watcher = null;
 	}
-);
 
-// Something to use when events are received.
-let log = console.log.bind(console);
-// Add event listeners.
-watcher
-	.on("add", path => log(`File ${path} has been added`))
-	.on("change", path => log(`File ${path} has been changed`))
-	.on("unlink", path => log(`File ${path} has been removed`));
+	watch(path, delayTime) {
+		this.watcher = chokidar.watch(path, {
+			usePolling: true,
+			interval: delayTime,
+		});
+		this.watcher.on("change", file => this.emit("dirwatcher:changed", fs.realpathSync(file)));
+	}
+	stopWatch() {
+		this.watcher.close();
+		this.watcher = null;
+	}
+}
 
-// More possible events.
-watcher
-	.on("addDir", path => log(`Directory ${path} has been added`))
-	.on("unlinkDir", path => log(`Directory ${path} has been removed`))
-	.on("error", error => log(`Watcher error: ${error}`))
-	.on("ready", () => log("Initial scan complete. Ready for changes"))
-	.on("raw", (event, path, details) => {
-		log("Raw event info:", event, path, details);
-	});
-
-// 'add', 'addDir' and 'change' events also receive stat() results as second
-// argument when available: http://nodejs.org/api/fs.html#fs_class_fs_stats
-watcher.on("change", (path, stats) => {
-	if (stats) console.log(`File ${path} changed size to ${stats.size}`);
-});
-
-// Watch new files.
-watcher.add("new-file");
-watcher.add(["new-file-2", "new-file-3", "**/other-file*"]);
-
-// Get list of actual paths being watched on the filesystem
-let watchedPaths = watcher.getWatched();
-
-// Un-watch some files.
-watcher.unwatch("new-file*");
-
-// Stop watching.
-watcher.close();
-
-// Full list of options. See below for descriptions. (do not use this example)
-// chokidar.watch("file", {
-// 	persistent: true,
-
-// 	ignored: "*.txt",
-// 	ignoreInitial: false,
-// 	followSymlinks: true,
-// 	cwd: ".",
-// 	disableGlobbing: false,
-
-// 	usePolling: true,
-// 	interval: 1,
-// 	binaryInterval: 300,
-// 	alwaysStat: false,
-// 	depth: 99,
-// 	awaitWriteFinish: {
-// 		stabilityThreshold: 2000,
-// 		pollInterval: 1
-// 	},
-
-// 	ignorePermissionErrors: false,
-// 	atomic: true // or a custom 'atomicity delay', in milliseconds (default 100)
-// });
+module.exports = DirWatcher;
