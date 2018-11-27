@@ -16,7 +16,7 @@ class DirWatcher extends EventEmitter {
 		});
 		this.watcher.on("change", file => this.emit("dirwatcher:changed", fs.realpathSync(file)));
 	}
-	stopWatch() {
+	stopWatching() {
 		this.watcher.close();
 		this.watcher = null;
 	}

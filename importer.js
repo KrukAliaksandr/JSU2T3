@@ -21,11 +21,22 @@ class Importer extends EventEmitter {
 				.fromFile(csvFilePath)
 				.then((jsonObj) => {
 					fs.writeFileSync(newFilePath, jsonObj, "utf8");
-
+					this.lastChangedFile = jsonObj;
 				});
 
 		});
 
 	}
+	stopWatching() {
+		this.watcher.close();
+		this.watcher = null;
+	}
 }
+
+function returnLastChangedFile() {
+	return this.lastChangedFile;
+}
+
+const importer = new Importer();
+importer.watch(".", 5);
 module.exports = Importer;
