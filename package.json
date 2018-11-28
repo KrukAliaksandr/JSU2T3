@@ -6,6 +6,7 @@
   "dependencies": {
     "chokidar": "^2.0.4",
     "csv-string": "^3.1.5",
+    "csvjson": "^5.1.0",
     "csvtojson": "^2.0.8",
     "eslint": "^5.9.0",
     "papaparse": "^4.6.2"

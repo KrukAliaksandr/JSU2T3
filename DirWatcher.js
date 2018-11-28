@@ -13,6 +13,7 @@ class DirWatcher extends EventEmitter {
 		this.watcher = chokidar.watch(path, {
 			usePolling: true,
 			interval: delayTime,
+			followSymlinks: false,
 		});
 		this.watcher.on("change", file => this.emit("dirwatcher:changed", fs.realpathSync(file)));
 	}
